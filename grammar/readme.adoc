@@ -1,0 +1,28 @@
+
+= git grammar
+
+== 命令
+
+- clone
+
+- fetch
+
+- merge
+
+- pull
+
+== 附加指令
+
+- --depth=1
+
+    指定深度（clone, fetch, pull）
+
+- --recursive
+
+        递归 clone 子项目
+
+- --recurse-submodules
+
+    初始化子项目
+
+    等效于：git submodule update --init --recursive

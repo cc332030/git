@@ -1,0 +1,7 @@
+
+= git hooks
+
+只需将名为post-checkout和post-merge的文件添加到相关存储库的.git/hooks目录中，并将以下内容添加到每个目录中：
+
+#!/bin/sh
+git submodule update --init --recursive

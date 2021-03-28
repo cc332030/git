@@ -1,0 +1,16 @@
+
+= push-to-another-mirror
+
+[source,shell script]
+----
+# clone 裸仓库
+git clone --bare https://github.com/exampleuser/old-repository.git
+
+# push new mirror
+cd old-repository.git
+git push --mirror https://github.com/exampleuser/new-repository.git
+
+# 删除 old
+cd ..
+$ rm -rf old-repository.git
+----

@@ -1,0 +1,51 @@
+
+= 分支
+
+== 命名
+
+- 主分支
+
+    - master
+
+    - develop
+
+- 辅助分支
+
+    - feature
+    - release
+    - fixbug
+
+== 操作
+
+=== clone branch
+
+[source,shell script]
+----
+git clone -b develop
+
+----
+
+=== create branch
+
+[source,shell script]
+----
+git checkout -b develop master
+
+----
+
+=== merge branch
+
+[source,shell script]
+----
+git merge --no-ff develop
+
+----
+
+=== 查看所有分支
+----
+git branch -a
+
+----
+
+
+=== 切换分支

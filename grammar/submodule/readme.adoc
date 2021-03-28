@@ -1,0 +1,51 @@
+
+= submodule
+
+== 初始化
+
+[source,shell script]
+----
+
+# clone 父项目，或者加上 --recurse-submodules 参数
+
+# 未 clone
+git clone --recursive git@gitee.com:c332030/c332030.git
+
+# 已 clone，一键初始化
+git submodule update --init --recursive
+
+# 已 clone，已初始化，更新
+git submodule update --recursive --remote
+
+# git pull 自动更新子模块
+git config --global submodule.recurse true
+
+git submodule init
+
+git submodule update
+
+----
+
+== 对子模块批量做某操作
+
+[source,shell script]
+----
+git submodule foreach git checkout master
+
+----
+
+== add
+[source,shell script]
+----
+git submodule add git@gitee.com:c332030/gohugo-theme-ananke.git themes/ananke
+
+git submodule add --force -b build git@gitee.com:c332030/royal-city-blog.git public
+
+----
+
+== 删除
+[source,shell script]
+----
+git submodule deinit themes/ananke
+
+----

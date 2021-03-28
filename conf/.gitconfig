@@ -1,0 +1,23 @@
+[user]
+  name = c332030
+  email = c332030@gmail.com
+
+[core]
+  # 不转换换行符
+  autocrlf = false
+  safecrlf = true
+
+  # 忽略换行符变更
+  whitespace = cr-at-eol
+
+[http "https://github.com"]
+  proxy = socks5://127.0.0.1:10808
+
+[submodule]
+  recurse = true
+
+[init]
+  defaultBranch = master
+
+[pull]
+  rebase = false

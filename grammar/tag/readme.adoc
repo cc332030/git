@@ -1,0 +1,19 @@
+
+= git tag
+
+[source,shell script]
+----
+
+# show
+git tag
+
+# create
+git tag v0.1
+
+# delete
+git tag --delete v0.1
+
+# delete origin tag
+git push --delete origin v0.1
+
+----
