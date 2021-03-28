@@ -1,0 +1,10 @@
+
+= mirror
+
+迁移仓库到 github，并配置同步到 gitee 的 github action
+
+== 注意事项
+
+. github 和 gitee 的用户名相同，仓库存在且名称相同
+. 使用 ssh 推送，请确保存在 ssh 密钥，且已配置公钥到 gitee 以及 github
+. github 仓库或者组织的 secrets ssh 密钥（SSH_PRIVATE_KEY）已配置
