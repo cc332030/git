@@ -2,10 +2,10 @@
 
 :clone
 echo.
-set /p project=ÏîÄ¿Ãû³Æ£º
+set /p project=è¯·è¾“å…¥é¡¹ç›®åœ°å€ï¼š
 
 cls
 echo.
-git clone https://gitee.com/c332030/%project%
+git clone git@gitee.com:c332030/%project%
 
 goto clone
