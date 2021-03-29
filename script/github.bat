@@ -1,11 +1,15 @@
 @echo off
 
-:clone
+set command=git clone
+set url=git@github.com
+set username=c332030
+
+:start
 echo.
-set /p project=ÏîÄ¿Ãû³Æ£º
+set /p name=è¯·è¾“å…¥é¡¹ç›®åœ°å€ï¼š
 
 cls
 echo.
-git clone https://github.com/c332030/%project%
+git clone git@github.com:c332030/%name% || ( echo. && git clone git@github.com:cc332030/%name% )
 
-goto clone
+goto start
