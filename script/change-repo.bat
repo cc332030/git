@@ -1,6 +1,6 @@
 @echo off
 
-set user=cc332030
+set user=c332030
 title user: %user%
 goto start
 
