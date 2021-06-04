@@ -6,7 +6,7 @@ echo.
 set /p dir=请输入目录：
 
 echo.
-set /p branch=请输入分值（master）：
+set /p branch=请输入分支（master）：
 
 cls
 
@@ -14,7 +14,8 @@ if not defined branch (
   set branch=master
 )
 
-echo use branch: %branch%
+echo.
+echo branch %branch% of  %dir%
 
 cd /d %dir%
 
