@@ -10,9 +10,15 @@
   # 忽略换行符变更
   whitespace = cr-at-eol
 
-[http "https://github.com"]
+[http]
+  proxy = socks5://127.0.0.1:10808
+[https]
   proxy = socks5://127.0.0.1:10808
 
+#[http "https://github.com"]
+#  proxy = socks5://127.0.0.1:10808
+
+# 递归操作子项目
 [submodule]
   recurse = true
 
