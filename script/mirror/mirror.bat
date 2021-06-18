@@ -15,7 +15,7 @@ xcopy /y %~dp0mirror.yml %work_path%\.github\workflows\
 
 cd %work_path%
 
-git pull
+git pull origin main
 
 rmdir /s /q .\.git >nul 2>&1
 
@@ -30,6 +30,6 @@ git commit -m init
 git remote add origin %git_remote%
 
 echo.
-git push origin master --force
+git push origin main --force
 
 goto start
