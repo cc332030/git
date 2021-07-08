@@ -13,7 +13,7 @@ set /p branch=«Î ‰»Î∑÷÷ß£®master£©£∫
 cls
 
 if not defined branch (
-  set branch=master
+  set branch=main
 )
 
 echo.
