@@ -4,16 +4,16 @@ title set-upstream
 :start
 
 echo.
-set /p dir=请输入目录：
+set /p dir=璇疯緭鍏ョ洰褰曪細
 
 echo.
 set branch=
-set /p branch=请输入分支（master）：
+set /p branch=璇疯緭鍏ュ垎鏀紙master锛夛細
 
 cls
 
 if not defined branch (
-  set branch=main
+  set branch=master
 )
 
 echo.
