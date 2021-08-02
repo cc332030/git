@@ -15,14 +15,16 @@ xcopy /y %~dp0mirror.yml %work_path%\.github\workflows\
 
 cd %work_path%
 
-git pull origin main
+git pull origin master
 
 git add -A
 
 echo.
-git commit -m init
+git commit -m mirror
 
 git branch -M main
+
+git remote remove origin
 git remote add origin %git_remote%
 
 echo.
