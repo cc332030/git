@@ -1,0 +1,32 @@
+
+= clone
+
+== special sha
+[source, shell script]
+----
+
+git init
+git remote add origin url://to/source/repository
+
+# fetch a commit (or branch or tag) of interest
+# Note: the full history up to this commit will be retrieved unless
+#       you limit it with '--depth=...' or '--shallow-since=...'
+git --depth=1 fetch origin <sha1-of-commit-of-interest>
+
+# reset this repository's master branch to the commit of interest
+git reset --hard FETCH_HEAD
+
+----
+
+== special ref
+
+[source, shell script]
+----
+
+# git clone -c remote.origin.fetch=+refs/changes/*:refs/remotes/origin/changes/* https://gerrit.googlesource.com/git-repo
+
+git clone --depth=1 -c remote.origin.fetch=+refs/heads/main git@github.com:cc332030/c-commons-java.git .
+
+git pull
+
+----
