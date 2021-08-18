@@ -1,0 +1,8 @@
+
+= 索引
+
+[source,shell script]
+----
+git update-index --chmod=+x gradlew
+
+----
