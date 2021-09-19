@@ -6,3 +6,14 @@
 curl -s -O https://raw.githubusercontent.com/cc332030/git/master/script/mirror/linux/mirror-github.sh && sh mirror-github.sh
 
 ----
+
+[source,yml]
+----
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: mirror
+        run: ${{ secrets.MIRROR_GITHUB }}
+
+----
