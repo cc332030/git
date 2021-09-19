@@ -3,6 +3,6 @@
 
 [source,shell script]
 ----
-curl -O https://raw.githubusercontent.com/cc332030/git/master/script/mirror/linux/mirror-github.sh && sh mirror-github.sh
+curl -s -O https://raw.githubusercontent.com/cc332030/git/master/script/mirror/linux/mirror-github.sh && sh mirror-github.sh
 
 ----
