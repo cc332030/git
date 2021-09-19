@@ -6,6 +6,7 @@ DESTINATION=$1
 
 if [ ! "$DESTINATION" ]; then
   DESTINATION=gitee
+  echo
   echo "default DESTINATION: $DESTINATION"
 fi
 
