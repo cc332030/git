@@ -7,7 +7,9 @@ jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - run: ${{ secrets.INIT_SSH }}
+      - name: init ssh
+        run: ${{ secrets.INIT_SSH }}
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - run: ${{ secrets.MIRROR_GITHUB }}
+      - name: mirror
+        run: ${{ secrets.MIRROR_GITHUB }}
