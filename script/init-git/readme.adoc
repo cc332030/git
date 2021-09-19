@@ -1,0 +1,9 @@
+
+= INIT_GIT
+
+[source,shell script]
+----
+curl -O https://raw.githubusercontent.com/cc332030/linux/master/script/init-ssh.sh \
+  && sh init-ssh.sh
+
+----
