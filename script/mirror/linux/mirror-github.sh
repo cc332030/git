@@ -2,8 +2,6 @@
 
 set -e
 
-DESTINATION=$1
-
 if [ ! "$DESTINATION" ]; then
   DESTINATION=gitee
   echo
