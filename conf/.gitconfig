@@ -1,6 +1,7 @@
 [user]
   name = c332030
   email = c332030@gmail.com
+  signingkey = 790EB374
 
 [core]
   # 不转换换行符
@@ -10,13 +11,11 @@
   # 忽略换行符变更
   whitespace = cr-at-eol
 
+# 加速
 [http]
   proxy = socks5://127.0.0.1:10808
 [https]
   proxy = socks5://127.0.0.1:10808
-
-#[http "https://github.com"]
-#  proxy = socks5://127.0.0.1:10808
 
 # 递归操作子项目
 [submodule]
@@ -27,3 +26,6 @@
 
 [pull]
   rebase = false
+
+[commit]
+  gpgsign = true
