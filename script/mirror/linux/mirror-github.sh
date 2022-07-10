@@ -4,33 +4,35 @@ echo 'mirror-github'
 
 set -e
 
+REPOSITORY="$(basename "$GITHUB_REPOSITORY")"
+SOURCE="git@github.com:$GITHUB_REPOSITORY.git"
+
+echo "SOURCE: $SOURCE"
+
+git clone --mirror "$SOURCE" source && cd source || exit
+git fetch -p origin
+
+# Exclude refs created by GitHub for pull request.
+git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+
+
+
 if [ ! "$DESTINATION" ]; then
   DESTINATION=gitee
   echo
   echo "default DESTINATION: $DESTINATION"
 fi
 
-REPOSITORY="$(basename "$GITHUB_REPOSITORY")"
-
-SOURCE_REPO="git@github.com:$GITHUB_REPOSITORY.git"
-
 # if DESTINATION not starts with git@
 if test ${DESTINATION} = ${DESTINATION#git@}; then
-  DESTINATION_REPO="git@$DESTINATION.com:$GITHUB_ACTOR/$REPOSITORY.git"
+  DESTINATION="git@$DESTINATION.com:$GITHUB_ACTOR/$REPOSITORY.git"
 else
-  DESTINATION_REPO=$DESTINATION
+  DESTINATION=$DESTINATION
 fi
 
-echo "SOURCE_REPO: $SOURCE_REPO"
-echo "DESTINATION_REPO: $DESTINATION_REPO"
+echo "DESTINATION: $DESTINATION"
 
-git clone --mirror "$SOURCE_REPO" source && cd source || exit
-git remote set-url --push origin "$DESTINATION_REPO"
-
-git fetch -p origin
-
-# Exclude refs created by GitHub for pull request.
-git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+git remote set-url --push origin "$DESTINATION"
 git push --mirror
 
 echo 'mirror-github successfully'
