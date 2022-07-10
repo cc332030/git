@@ -1,14 +1,24 @@
 
 name: mirror
 
-on: [push, pull_request]
+on:
+  workflow_call:
+    inputs:
+      destination:
+        required: false
+        type: string
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
 
 jobs:
-  mirror:
+  build:
+    name: mirror
     runs-on: ubuntu-latest
     steps:
-      - uses: cc332030/init-ssh-action@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - uses: cc332030/git-mirror-action@main
         timeout-minutes: 2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        with:
+          destination: ${{ inputs.destination }}
