@@ -7,7 +7,6 @@ on:
       destination:
         required: false
         type: string
-        default: 'gitee'
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -22,4 +21,4 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          destination: ${{ inputs.destination }}
+          destination: ${{ inputs.destination:gitee }}
