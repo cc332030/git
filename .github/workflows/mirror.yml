@@ -7,6 +7,7 @@ on:
       destination:
         required: false
         type: string
+        default: 'gitee'
     secrets:
       SSH_PRIVATE_KEY:
         required: true
