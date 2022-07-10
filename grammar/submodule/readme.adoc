@@ -46,6 +46,17 @@ git submodule add --force -b build git@gitee.com:c332030/royal-city-blog.git pub
 == 删除
 [source,shell script]
 ----
-git submodule deinit themes/ananke
+
+set theme=themes\stack
+
+rmdir /s /q %theme%
+
+git submodule deinit %theme%
+
+rmdir /s /q .git/modules/%theme%
+
+git rm -f %theme%
+
+git rm --cached %theme%
 
 ----
