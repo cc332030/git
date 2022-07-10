@@ -16,5 +16,4 @@ jobs:
         timeout-minutes: 2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        with:
-          destination: gitee
+          DESTINATION: gitee
