@@ -3,10 +3,6 @@ name: mirror
 
 on:
   workflow_call:
-    inputs:
-      destination:
-        required: false
-        type: string
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -21,4 +17,4 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          destination: ${{ inputs.destination:gitee }}
+          destination: gitee
