@@ -4,14 +4,14 @@ echo 'mirror'
 
 set -e
 
-SOURCE_REPO=$1
-DESTINATION_REPO=$2
+SOURCE=$1
+DESTINATION=$2
 
-echo "SOURCE=$SOURCE_REPO"
-echo "DESTINATION=$DESTINATION_REPO"
+echo "SOURCE=$SOURCE"
+echo "DESTINATION=$DESTINATION"
 
-git clone --mirror "$SOURCE_REPO" source && cd source || exit
-git remote set-url --push origin "$DESTINATION_REPO"
+git clone --mirror "$SOURCE" source && cd source || exit
+git remote set-url --push origin "$DESTINATION"
 
 git fetch -p origin
 
