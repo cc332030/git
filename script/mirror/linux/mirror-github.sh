@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo 'mirror-github'
+
 set -e
 
 if [ ! "$DESTINATION" ]; then
@@ -30,3 +32,5 @@ git fetch -p origin
 # Exclude refs created by GitHub for pull request.
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 git push --mirror
+
+echo 'mirror-github successfully'
