@@ -17,6 +17,12 @@ git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 
 
+if [ ! "$DESTINATION" ]; then
+  DESTINATION=gitee
+  echo
+  echo "default DESTINATION: $DESTINATION"
+fi
+
 # if DESTINATION not starts with git@
 if test ${DESTINATION} = ${DESTINATION#git@}; then
   DESTINATION="git@$DESTINATION.com:$GITHUB_ACTOR/$REPOSITORY.git"
