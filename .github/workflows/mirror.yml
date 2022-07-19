@@ -20,10 +20,11 @@ jobs:
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: mirror-github
+      - name: mirror
         run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
         timeout-minutes: 2
         env:
           DESTINATION: ${{ secrets.DESTINATION }}
       - name: init-ssh-clean
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
+      - run: ls -alh ~
