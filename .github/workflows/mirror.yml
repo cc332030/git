@@ -1,0 +1,25 @@
+
+name: mirror
+
+on:
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+      DESTINATION:
+        required: false
+
+jobs:
+  mirror:
+    name: mirror
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+      - run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
+        timeout-minutes: 2
+        env:
+          DESTINATION: ${{ secrets.DESTINATION }}
+      - run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
