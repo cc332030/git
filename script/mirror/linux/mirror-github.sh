@@ -19,8 +19,10 @@ git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 if [ ! "$DESTINATION" ]; then
   DESTINATION=gitee
+  echo
   echo "default DESTINATION: $DESTINATION"
 else
+  echo
   echo "DESTINATION: $DESTINATION"
 fi
 
@@ -33,6 +35,7 @@ mirror(){
    REMOTE="git@$REMOTE.com:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 
+  echo
   echo "REMOTE: $REMOTE"
 
   git remote set-url --push origin "$REMOTE"
