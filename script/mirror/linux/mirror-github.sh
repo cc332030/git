@@ -23,16 +23,25 @@ if [ ! "$DESTINATION" ]; then
   echo "default DESTINATION: $DESTINATION"
 fi
 
-# if DESTINATION not starts with git@
-if test ${DESTINATION} = ${DESTINATION#git@}; then
-  DESTINATION="git@$DESTINATION.com:$GITHUB_ACTOR/$REPOSITORY.git"
-else
-  DESTINATION=$DESTINATION
-fi
+mirror(){
 
-echo "DESTINATION: $DESTINATION"
+  REMOTE=$1
 
-git remote set-url --push origin "$DESTINATION"
-git push --mirror
+  # if REMOTE not starts with git@
+  if test ${REMOTE} = ${REMOTE#git@}; then
+   REMOTE="git@$REMOTE.com:$GITHUB_ACTOR/$REPOSITORY.git"
+  fi
+
+  echo "REMOTE: $REMOTE"
+
+  git remote set-url --push origin "$REMOTE"
+  git push --mirror
+
+}
+
+REMOTES=$(echo $DESTINATION | sed "s/,/\n/g")
+for REMOTE in $REMOTES; do
+  mirror "$REMOTE"
+done
 
 echo 'mirror-github successfully'
