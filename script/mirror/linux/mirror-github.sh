@@ -19,8 +19,10 @@ git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 if [ ! "$DESTINATION" ]; then
   DESTINATION=gitee
-  echo
-  echo "default DESTINATION: $DESTINATION"
+  echo "
+  default DESTINATION: $DESTINATION"
+else
+  echo "DESTINATION: $DESTINATION"
 fi
 
 mirror(){
