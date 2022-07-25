@@ -31,7 +31,7 @@ mirror(){
   REMOTE=$1
 
   # if REMOTE not starts with git@
-  if test ${REMOTE} = ${REMOTE#git@}; then
+  if test "${REMOTE}" = "${REMOTE#git@}"; then
    REMOTE="git@$REMOTE.com:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 
