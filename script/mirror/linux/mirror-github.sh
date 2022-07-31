@@ -18,7 +18,7 @@ git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 
 if [ ! "$DESTINATION" ]; then
-  DESTINATION=gitee
+  DESTINATION=gitee,gitlab
   echo
   echo "default DESTINATION: $DESTINATION"
 else
