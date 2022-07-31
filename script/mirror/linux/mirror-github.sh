@@ -18,7 +18,7 @@ git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 
 if [ ! "$DESTINATION" ]; then
-  DESTINATION=gitee,gitlab
+  DESTINATION=gitlab.com,gitee.com,gitcode.net
   echo
   echo "default DESTINATION: $DESTINATION"
 else
@@ -32,7 +32,7 @@ mirror(){
 
   # if REMOTE not starts with git@
   if test "${REMOTE}" = "${REMOTE#git@}"; then
-   REMOTE="git@$REMOTE.com:$GITHUB_ACTOR/$REPOSITORY.git"
+   REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 
   echo
