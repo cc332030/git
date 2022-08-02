@@ -39,7 +39,7 @@ mirror(){
   echo "REMOTE: $REMOTE"
 
   git remote set-url --push origin "$REMOTE"
-  git push --mirror
+  git push --mirror || true
 
 }
 
