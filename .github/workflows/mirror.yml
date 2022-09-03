@@ -22,7 +22,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: mirror
         run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
-        timeout-minutes: 2
         env:
           DESTINATION: ${{ secrets.DESTINATION }}
       - name: init-ssh-clean
