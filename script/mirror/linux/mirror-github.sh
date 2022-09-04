@@ -34,6 +34,7 @@ write_hosts() {
                     grep "Address: " |
                     cut -d ' ' -f 2)
 
+  echo "$DOMAIN $IP"
   echo "$IP $DOMAIN" >> /etc/hosts
 
 }
