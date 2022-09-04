@@ -26,6 +26,18 @@ else
   echo "DESTINATION: $DESTINATION"
 fi
 
+write_hosts() {
+  DOMAIN=$(echo "$1" |
+           cut -d @ -f 2 |
+           cut -d : -f 1)
+  IP=$(nslookup "$DOMAIN" 8.8.8.8 |
+                    grep "Address: " |
+                    cut -d ' ' -f 2)
+
+  echo "$IP $DOMAIN" >> /etc/hosts
+
+}
+
 mirror(){
 
   REMOTE=$1
@@ -34,6 +46,8 @@ mirror(){
   if test "${REMOTE}" = "${REMOTE#git@}"; then
    REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
+
+  write_hosts "$REMOTE"
 
   echo
   echo "REMOTE: $REMOTE"
