@@ -41,7 +41,6 @@ mirror(){
   git remote set-url --push origin "$REMOTE"
   git push \
     --progress \
-    --porcelain  \
     --mirror || true
 
 }
