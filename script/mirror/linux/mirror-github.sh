@@ -4,6 +4,23 @@ echo 'mirror-github'
 
 set -e
 
+user=$(whoami)
+if [ "root" = "$user" ]
+then
+  USER_HOME=/root
+else
+  USER_HOME=/home/$user
+fi
+echo "USER_HOME: ${USER_HOME}"
+
+WORK_PATH=~/.hosts
+echo "" >> $WORK_PATH
+if [ ! ~ = "$USER_HOME" ]
+then
+  ln -s $WORK_PATH "$USER_HOME"
+fi
+
+
 REPOSITORY="$(basename "$GITHUB_REPOSITORY")"
 SOURCE="git@github.com:$GITHUB_REPOSITORY.git"
 
@@ -34,8 +51,7 @@ write_hosts() {
                     grep "Address: " |
                     cut -d ' ' -f 2)
 
-  echo "$DOMAIN $IP"
-  echo "$IP $DOMAIN" >> /etc/hosts
+  echo "$IP $DOMAIN" >> ~/.hosts
 
 }
 
