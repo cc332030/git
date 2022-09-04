@@ -64,10 +64,10 @@ mirror(){
    REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 
-  write_hosts "$REMOTE"
-
   echo
   echo "REMOTE: $REMOTE"
+
+  write_hosts "$REMOTE"
 
   git remote set-url --push origin "$REMOTE"
   git push \
