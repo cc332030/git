@@ -4,12 +4,12 @@ echo 'mirror-github'
 
 set -e
 
-user=$(whoami)
-if [ "root" = "$user" ]
+USER=$(whoami)
+if [ "root" = "$USER" ]
 then
   USER_HOME=/root
 else
-  USER_HOME=/home/$user
+  USER_HOME=/home/$USER
 fi
 echo "USER_HOME: ${USER_HOME}"
 
