@@ -25,4 +25,5 @@ jobs:
         env:
           DESTINATION: ${{ secrets.DESTINATION }}
       - name: init-ssh-clean
+        if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
