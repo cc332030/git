@@ -3,11 +3,13 @@ name: mirror
 
 on:
   workflow_call:
+    inputs:
+      destination:
+        required: false
+        type: string
     secrets:
       SSH_PRIVATE_KEY:
         required: true
-      DESTINATION:
-        required: false
 
 jobs:
   mirror:
@@ -23,7 +25,7 @@ jobs:
       - name: mirror
         run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
         env:
-          DESTINATION: ${{ secrets.DESTINATION }}
+          DESTINATION: ${{ inputs.DESTINATION }}
       - name: init-ssh-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
