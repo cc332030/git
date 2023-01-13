@@ -73,7 +73,7 @@ mirror(){
   git push \
     --progress \
     --porcelain  \
-    --mirror || true
+    --mirror
 
 }
 
