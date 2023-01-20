@@ -29,3 +29,7 @@
 
 [commit]
   gpgsign = true
+[tag]
+  gpgSign = true
+[push]
+  gpgSign = true
