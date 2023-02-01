@@ -3,6 +3,10 @@
 
 == 命令
 
+- add
+
+    undo add: `git clean  -d  -f <path>`
+
 - clone
 
 - fetch
