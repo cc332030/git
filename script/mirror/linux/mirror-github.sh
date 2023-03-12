@@ -51,7 +51,9 @@ write_hosts() {
                     grep "Address: " |
                     cut -d ' ' -f 2)
 
-  echo "$IP $DOMAIN" >> ~/.hosts
+  ip_domain="$IP $DOMAIN"
+  echo "ip domain: ${ip_domain}"
+  echo "$ip_domain" >> ~/.hosts
 
 }
 
