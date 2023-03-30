@@ -1,6 +1,6 @@
 [user]
   name = c332030
-  email = c332030@gmail.com
+  email = c332030@c332030.com
   signingkey = 790EB374
 
 [core]
@@ -10,12 +10,13 @@
 
   # 忽略换行符变更
   whitespace = cr-at-eol
+  filemode = false
 
 # 加速
 [http]
-  proxy = socks5://127.0.0.1:10808
+    proxy = http://127.0.0.1:10809
 [https]
-  proxy = socks5://127.0.0.1:10808
+    proxy = http://127.0.0.1:10809
 
 # 递归操作子项目
 [submodule]
@@ -25,7 +26,7 @@
   defaultBranch = main
 
 [pull]
-  rebase = false
+  rebase = true
 
 [commit]
   gpgsign = true
