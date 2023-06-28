@@ -33,15 +33,18 @@ git fetch -p origin
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 
+DEFAULT_DESTINATION=gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,jihulab.com
 
 if [ ! "$DESTINATION" ]; then
-  DESTINATION=gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,jihulab.com
+  DESTINATION=${DEFAULT_DESTINATION}
   echo
   echo "default DESTINATION: $DESTINATION"
-else
-  echo
-  echo "DESTINATION: $DESTINATION"
+elif [ "," = "$(echo "$DESTINATION" | cut -c -1)" ]; then
+  DESTINATION=${DEFAULT_DESTINATION}${DESTINATION}
 fi
+
+echo
+echo "DESTINATION: $DESTINATION"
 
 write_hosts() {
   DOMAIN=$(echo "$1" |
