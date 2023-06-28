@@ -6,5 +6,7 @@ on: [push, pull_request]
 jobs:
   mirror:
     uses: cc332030/git/.github/workflows/mirror.yml@master
+    with:
+      destination: ,git.c332030.com
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
