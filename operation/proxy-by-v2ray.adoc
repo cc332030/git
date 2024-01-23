@@ -8,15 +8,16 @@
 socks5
 [source,text]
 ----
-Host github.com
-HostName github.com
-User git
 
-# windows
+# windows，connect 在 git 下，需要配置环境变量
 ProxyCommand connect -S 127.0.0.1:10808 %h %p
 
 # linux
 ProxyCommand nc -v -x 127.0.0.1:10808 %h %p
+
+Host github.com
+  HostName github.com
+  User git
 
 ----
 
