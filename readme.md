@@ -1,6 +1,9 @@
 
 # Git
 
+switch workdir :
+git -C "${CURRENT_DIR}" pull
+
 ## init
 ```shell script
 git init
