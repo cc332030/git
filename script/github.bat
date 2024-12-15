@@ -1,6 +1,7 @@
 @echo off
 
 :start
+cd /d %~dp0
 echo.
 set /p name=请输入项目地址：
 

@@ -1,6 +1,7 @@
 @echo off
 
 :clone
+cd /d %~dp0
 echo.
 set /p project=请输入项目地址：
 
