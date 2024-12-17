@@ -6,17 +6,16 @@
 [core]
   # 不转换换行符
   autocrlf = false
-  safecrlf = true
-
+  safecrlf = false
   # 忽略换行符变更
   whitespace = cr-at-eol
   filemode = false
 
 # 加速
-[http]
-    proxy = http://127.0.0.1:10809
-[https]
-    proxy = http://127.0.0.1:10809
+#[http]
+#    proxy = http://127.0.0.1:10809
+#[https]
+#    proxy = http://127.0.0.1:10809
 
 # 递归操作子项目
 [submodule]
@@ -29,6 +28,10 @@
   rebase = true
 
 [commit]
-  gpgsign = true
+  gpgsign = false
 [tag]
-  gpgSign = true
+  gpgSign = false
+[safe]
+    directory = '*'
+[credential]
+	helper = store
