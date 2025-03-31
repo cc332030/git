@@ -47,5 +47,11 @@ git branch -a
 
 ----
 
+=== 查看已合并分支
+----
+git branch --merged
+
+----
+
 
 === 切换分支
