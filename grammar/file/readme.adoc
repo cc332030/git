@@ -1,0 +1,9 @@
+
+= file
+
+[source,shell]
+----
+# 长文件名
+git config --system core.longpaths  true
+
+----
