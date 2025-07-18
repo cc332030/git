@@ -34,4 +34,4 @@
 [safe]
     directory = '*'
 [credential]
-	helper = store
+  helper = store
