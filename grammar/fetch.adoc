@@ -1,0 +1,9 @@
+
+= fetch
+
+--depth=1 后，重新拉取历史记录
+[source,shell]
+----
+git fetch --unshallow
+
+----
