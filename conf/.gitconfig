@@ -10,6 +10,8 @@
   # 忽略换行符变更
   whitespace = cr-at-eol
   filemode = false
+  # 长路径
+  longpaths = true
 
 # 加速
 #[http]
