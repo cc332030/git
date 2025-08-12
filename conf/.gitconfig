@@ -34,6 +34,6 @@
 [tag]
   gpgSign = false
 [safe]
-    directory = '*'
+  directory = '*'
 [credential]
   helper = store
