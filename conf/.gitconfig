@@ -12,6 +12,8 @@
   filemode = false
   # 长路径
   longpaths = true
+  # 不忽略大小写
+  ignorecase = false
 
 # 加速
 #[http]
@@ -37,3 +39,5 @@
   directory = '*'
 [credential]
   helper = store
+[credential "http://47.97.161.43"]
+	provider = generic
