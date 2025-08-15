@@ -39,5 +39,3 @@
   directory = '*'
 [credential]
   helper = store
-[credential "http://47.97.161.43"]
-	provider = generic
