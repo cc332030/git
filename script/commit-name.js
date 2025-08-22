@@ -8,6 +8,7 @@ const command = `git config user.name ${username}`
 function readSubDirThenDo(path, callback) {
 
     fs.readdir(path, (err, files) => {
+
         if(err) {
             console.log(err)
             return
@@ -21,11 +22,16 @@ function readSubDirThenDo(path, callback) {
         // }
 
         if(files.includes('.git')) {
+            console.debug(`commit name for: ${path}`)
             callback(path);
             return
         }
 
         files.forEach(file => {
+
+            if(file.includes(`c332030`)) {
+                return
+            }
 
             const filePath = path + '/' + file
             fs.stat(filePath, (err, stats) => {
