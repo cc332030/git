@@ -5,6 +5,8 @@ const child_process = require("child_process")
 const username = '明非';
 const command = `git config user.name ${username}`
 
+let num = 1
+
 function readSubDirThenDo(path, callback) {
 
     fs.readdir(path, (err, files) => {
@@ -22,7 +24,7 @@ function readSubDirThenDo(path, callback) {
         // }
 
         if(files.includes('.git')) {
-            console.debug(`commit name for: ${path}`)
+            console.debug(`${num++}: commit name for ${path}`)
             callback(path);
             return
         }
@@ -56,7 +58,6 @@ readSubDirThenDo(__dirname, (path) => {
     child_process.exec(command,{ cwd: path }, function(error, stdout, stderr) {
         if(error) {
             console.log(error)
-
         }
     });
 
