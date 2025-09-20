@@ -10,4 +10,4 @@ jobs:
 #      destination: ,git.c332030.com
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      CNB_SYNC: ${{ secrets.CNB_SYNC }}
+      CNB_SYNC_TOKEN: ${{ secrets.CNB_SYNC_TOKEN }}

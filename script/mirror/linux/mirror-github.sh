@@ -67,11 +67,37 @@ mirror(){
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
-    if [ -n "${CNB_SYNC}" ]; then
-      REMOTE="https://cnb:${CNB_SYNC}@${REMOTE}/${OWNER}/${REPOSITORY}"
+    if [ -n "${CNB_SYNC_TOKEN}" ]; then
+
+      # 仓库不存在时创建
+      GET_RESULT=$(curl -X 'GET' \
+                "https://api.cnb.cool/${GITHUB_REPOSITORY}" \
+                -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
+                -H 'accept: application/json' | grep web_url)
+
+      echo
+      echo "GET_RESULT: ${GET_RESULT}"
+
+      if [ -z "${GET_RESULT}" ]; then
+          CREATE_RESULT=$(curl -X 'POST' \
+                        "https://api.cnb.cool/${OWNER}/-/repos" \
+                        -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
+                        -H 'accept: application/json' \
+                        -H 'Content-Type: application/json' \
+                        -d "
+                          {
+                            \"name\": \"${REPOSITORY}\",
+                            \"visibility\": \"private\"
+                          }
+                        ")
+        echo
+        echo "CREATE_RESULT: ${CREATE_RESULT}"
+      fi
+
+      REMOTE="https://cnb:${CNB_SYNC_TOKEN}@${REMOTE}/${OWNER}/${REPOSITORY}"
     else
       echo
-      echo "skip <${REMOTE}> because of no CNB_SYNC"
+      echo "skip <${REMOTE}> because of no CNB_SYNC_TOKEN"
       REMOTE=
     fi
 

@@ -10,7 +10,7 @@ on:
     secrets:
       SSH_PRIVATE_KEY:
         required: true
-      CNB_SYNC:
+      CNB_SYNC_TOKEN:
         required: false
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - name: mirror
         run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
         env:
-          CNB_SYNC: ${{ secrets.CNB_SYNC }}
+          CNB_SYNC_TOKEN: ${{ secrets.CNB_SYNC_TOKEN }}
           DESTINATION: ${{ inputs.destination }}
       - name: init-ssh-clean
         if: ${{ always() }}
