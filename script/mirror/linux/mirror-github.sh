@@ -21,6 +21,7 @@ then
 fi
 
 
+OWNER=$(echo "${GITHUB_REPOSITORY}" | cut -d / -f 1)
 REPOSITORY="$(basename "${GITHUB_REPOSITORY}")"
 SOURCE="git@github.com:${GITHUB_REPOSITORY}.git"
 
@@ -67,7 +68,7 @@ mirror(){
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
     if [ -n "${CNB_SYNC}" ]; then
-      REMOTE="https://cnb:${CNB_SYNC}@${REMOTE}/${GITHUB_REPOSITORY_OWNER}/${REPOSITORY}"
+      REMOTE="https://cnb:${CNB_SYNC}@${REMOTE}/${OWNER}/${REPOSITORY}"
     else
       echo
       echo "skip <${REMOTE}> because of no CNB_SYNC"
