@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo ''
 echo 'mirror-github'
 
 set -e
