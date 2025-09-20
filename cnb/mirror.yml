@@ -1,0 +1,49 @@
+
+.mirror: &mirror
+  - env:
+      DESTINATION: github.com
+    services:
+      - docker
+    docker:
+      image: alpine/git
+    stages:
+      - name: init-ssh-pre
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+      - name: init-ssh
+        imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: mirror
+        script: |
+
+          git clone ${CNB_REPO_URL_HTTPS} source
+          cd source
+
+          REMOTES=$(echo "${DESTINATION}" | sed "s/,/\n/g")
+          for REMOTE in ${REMOTES}; do
+
+            REMOTE_URL="git@${REMOTE}:${CNB_REPO_SLUG}.git"
+
+            echo ""
+            echo "REMOTE_URL: ${REMOTE_URL}"
+          
+            git remote set-url --push origin "${REMOTE_URL}"
+            git push \
+              --progress \
+              --porcelain  \
+              --mirror || true
+
+          done
+
+    endStages:
+      - name: init-maven-clean
+        script: |
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
+
+main:
+  pull_request:
+    - <<: *mirror
+  push:
+    - <<: *mirror
