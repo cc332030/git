@@ -64,16 +64,17 @@ write_hosts() {
 mirror(){
 
   REMOTE=$1
-  echo "mirror <${REMOTE}>"
-  echo "mirror <${CNB_COOL}>"
+  echo
+  echo "mirror to <${REMOTE}>"
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
-    echo "check <${CNB_SYNC_TOKEN}>"
+  echo
+    echo "check CNB_SYNC_TOKEN"
     if [ -n "${CNB_SYNC_TOKEN}" ]; then
 
-      echo "check repository exists"
-
+  echo
+      echo "check exists ${GITHUB_REPOSITORY}"
       # 仓库不存在时创建
       GET_RESULT=$(curl -sS -X 'GET' \
                 "https://api.cnb.cool/${GITHUB_REPOSITORY}" \
@@ -108,9 +109,11 @@ mirror(){
     fi
 
   elif [ "${REMOTE}" = "${REMOTE#git@}" ]; then
-    echo "REMOTE start git"
+    echo
+    echo "REMOTE startsWith git"
     REMOTE="git@${REMOTE}:${GITHUB_ACTOR}/${REPOSITORY}.git"
   else
+    echo
     echo "REMOTE else"
   fi
 
@@ -132,8 +135,8 @@ mirror(){
 
 REMOTES=$(echo "${DESTINATION}" | sed "s/,/\n/g")
 for REMOTE in ${REMOTES}; do
-  echo "mirror to <${REMOTE}>"
   mirror "${REMOTE}"
 done
 
+echo
 echo 'mirror-github successfully'
