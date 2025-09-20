@@ -122,7 +122,7 @@ mirror(){
 
 }
 
-REMOTES=$(echo ${DESTINATION} | sed "s/,/\n/g")
+REMOTES=$(echo "${DESTINATION}" | sed "s/,/\n/g")
 for REMOTE in $REMOTES; do
   mirror "${REMOTE}"
 done
