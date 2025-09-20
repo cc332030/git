@@ -68,7 +68,10 @@ mirror(){
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
+    echo "check <${CNB_SYNC_TOKEN}>"
     if [ -n "${CNB_SYNC_TOKEN}" ]; then
+
+      echo "check repository exists"
 
       # 仓库不存在时创建
       GET_RESULT=$(curl -sS -X 'GET' \
@@ -104,7 +107,10 @@ mirror(){
     fi
 
   elif [ "${REMOTE}" = "${REMOTE#git@}" ]; then
-   REMOTE="git@${REMOTE}:${GITHUB_ACTOR}/${REPOSITORY}.git"
+    echo "REMOTE start git"
+    REMOTE="git@${REMOTE}:${GITHUB_ACTOR}/${REPOSITORY}.git"
+  else
+    echo "REMOTE else"
   fi
 
   echo
@@ -123,8 +129,8 @@ mirror(){
 
 }
 
-REMOTES=$(echo $DESTINATION | sed "s/,/\n/g")
-for REMOTE in $REMOTES; do
+REMOTES=$(echo "${DESTINATION}" | sed "s/,/\n/g")
+for REMOTE in ${REMOTES}; do
   echo "mirror to <${REMOTE}>"
   mirror "${REMOTE}"
 done
