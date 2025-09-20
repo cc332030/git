@@ -78,7 +78,7 @@ mirror(){
       GET_RESULT=$(curl -sS -X 'GET' \
                 "https://api.cnb.cool/${GITHUB_REPOSITORY}" \
                 -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
-                -H 'accept: application/json' | grep 'web_url')
+                -H 'accept: application/json')
 
       echo
       echo "GET_RESULT: ${GET_RESULT}"
