@@ -69,7 +69,7 @@ mirror(){
     if [ -n "${CNB_SYNC}" ]; then
       REMOTE="https://cnb:${CNB_SYNC}@$REMOTE/$GITHUB_ACTOR/$REPOSITORY"
     else
-      echo "${REMOTE} skip of CNB_SYNC is empty"
+      echo "skip <${REMOTE}> because of no CNB_SYNC"
       REMOTE=
     fi
 
