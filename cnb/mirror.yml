@@ -38,7 +38,7 @@
           done
 
     endStages:
-      - name: init-maven-clean
+      - name: init-ssh-clean
         script: |
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
 
