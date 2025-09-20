@@ -65,21 +65,31 @@ mirror(){
   REMOTE=$1
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
-   REMOTE="https://cnb:${CNB_SYNC}@$REMOTE/$GITHUB_ACTOR/$REPOSITORY"
+
+    if [ -n "${CNB_SYNC}" ]; then
+      REMOTE="https://cnb:${CNB_SYNC}@$REMOTE/$GITHUB_ACTOR/$REPOSITORY"
+    else
+      echo "${REMOTE} skip of CNB_SYNC is empty"
+      REMOTE=
+    fi
+
   elif [ "${REMOTE}" = "${REMOTE#git@}" ]; then
    REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 
   echo
-  echo "REMOTE: $REMOTE"
+  echo "REMOTE: ${REMOTE}"
 
-  write_hosts "$REMOTE"
+  if [ -n "${REMOTE}" ]; then
 
-  git remote set-url --push origin "$REMOTE"
-  git push \
-    --progress \
-    --porcelain  \
-    --mirror || true
+    write_hosts "$REMOTE"
+
+    git remote set-url --push origin "$REMOTE"
+    git push \
+      --progress \
+      --porcelain  \
+      --mirror || true
+  fi
 
 }
 
