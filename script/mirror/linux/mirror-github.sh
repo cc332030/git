@@ -5,11 +5,11 @@ echo 'mirror-github'
 set -e
 
 USER=$(whoami)
-if [ "root" = "$USER" ]
+if [ "root" = "${USER}" ]
 then
   USER_HOME=/root
 else
-  USER_HOME=/home/$USER
+  USER_HOME=/home/${USER}
 fi
 echo "USER_HOME: ${USER_HOME}"
 
@@ -21,8 +21,8 @@ then
 fi
 
 
-REPOSITORY="$(basename "$GITHUB_REPOSITORY")"
-SOURCE="git@github.com:$GITHUB_REPOSITORY.git"
+REPOSITORY="$(basename "${GITHUB_REPOSITORY}")"
+SOURCE="git@github.com:${GITHUB_REPOSITORY}.git"
 
 echo "SOURCE: $SOURCE"
 
@@ -37,16 +37,16 @@ CNB_COOL=cnb.cool
 
 DEFAULT_DESTINATION=${CNB_COOL},gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,atomgit.com
 
-if [ ! "$DESTINATION" ]; then
+if [ ! "${DESTINATION}" ]; then
   DESTINATION=${DEFAULT_DESTINATION}
   echo
-  echo "default DESTINATION: $DESTINATION"
-elif [ "," = "$(echo "$DESTINATION" | cut -c -1)" ]; then
+  echo "default DESTINATION: ${DESTINATION}"
+elif [ "," = "$(echo "${DESTINATION}" | cut -c -1)" ]; then
   DESTINATION=${DEFAULT_DESTINATION}${DESTINATION}
 fi
 
 echo
-echo "DESTINATION: $DESTINATION"
+echo "DESTINATION: ${DESTINATION}"
 
 write_hosts() {
   DOMAIN=$(echo "$1" |
@@ -67,14 +67,14 @@ mirror(){
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
     if [ -n "${CNB_SYNC}" ]; then
-      REMOTE="https://cnb:${CNB_SYNC}@$REMOTE/$GITHUB_ACTOR/$REPOSITORY"
+      REMOTE="https://cnb:${CNB_SYNC}@${REMOTE}/${GITHUB_REPOSITORY_OWNER}/${REPOSITORY}"
     else
       echo "skip <${REMOTE}> because of no CNB_SYNC"
       REMOTE=
     fi
 
   elif [ "${REMOTE}" = "${REMOTE#git@}" ]; then
-   REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
+   REMOTE="git@${REMOTE}:${GITHUB_ACTOR}/${REPOSITORY}.git"
   fi
 
   echo
@@ -82,9 +82,9 @@ mirror(){
 
   if [ -n "${REMOTE}" ]; then
 
-    write_hosts "$REMOTE"
+    write_hosts "${REMOTE}"
 
-    git remote set-url --push origin "$REMOTE"
+    git remote set-url --push origin "${REMOTE}"
     git push \
       --progress \
       --porcelain  \
@@ -93,9 +93,9 @@ mirror(){
 
 }
 
-REMOTES=$(echo $DESTINATION | sed "s/,/\n/g")
+REMOTES=$(echo ${DESTINATION} | sed "s/,/\n/g")
 for REMOTE in $REMOTES; do
-  mirror "$REMOTE"
+  mirror "${REMOTE}"
 done
 
 echo 'mirror-github successfully'
