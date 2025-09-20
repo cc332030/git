@@ -64,6 +64,7 @@ write_hosts() {
 mirror(){
 
   REMOTE=$1
+  echo "mirror <${REMOTE}>"
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
@@ -122,8 +123,9 @@ mirror(){
 
 }
 
-REMOTES=$(echo "${DESTINATION}" | sed "s/,/\n/g")
+REMOTES=$(echo $DESTINATION | sed "s/,/\n/g")
 for REMOTE in $REMOTES; do
+  echo "mirror to <${REMOTE}>"
   mirror "${REMOTE}"
 done
 
