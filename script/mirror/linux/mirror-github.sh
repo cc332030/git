@@ -4,6 +4,9 @@ echo 'mirror-github'
 
 set -e
 
+CCC=c332030
+CCCC=cc332030
+
 USER=$(whoami)
 if [ "root" = "${USER}" ]
 then
@@ -85,8 +88,15 @@ mirror(){
       echo "GET_RESULT: ${GET_RESULT}"
 
       if ! echo "${GET_RESULT}" | grep -q 'name'; then
+
+          if [ "${OWNER}" = "${CCC}" ]; then
+            CNB_OWNER=${CCCC}
+          else
+            CNB_OWNER=${OWNER}
+          fi
+
           CREATE_RESULT=$(curl -sS -X 'POST' \
-                        "https://api.cnb.cool/${OWNER}/-/repos" \
+                        "https://api.cnb.cool/${CNB_OWNER}/-/repos" \
                         -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
                         -H 'accept: application/json' \
                         -H 'Content-Type: application/json' \
@@ -100,7 +110,7 @@ mirror(){
         echo "CREATE_RESULT: ${CREATE_RESULT}"
       fi
 
-      REMOTE="https://cnb:${CNB_SYNC_TOKEN}@${REMOTE}/${OWNER}/${REPOSITORY}"
+      REMOTE="https://cnb:${CNB_SYNC_TOKEN}@${REMOTE}/${CNB_OWNER}/${REPOSITORY}"
 
     else
       echo
