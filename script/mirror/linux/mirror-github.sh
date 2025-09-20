@@ -65,6 +65,7 @@ mirror(){
 
   REMOTE=$1
   echo "mirror <${REMOTE}>"
+  echo "mirror <${CNB_COOL}>"
 
   if [ "${REMOTE}" = "${CNB_COOL}" ]; then
 
