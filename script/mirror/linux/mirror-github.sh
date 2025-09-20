@@ -33,7 +33,9 @@ git fetch -p origin
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
 
-DEFAULT_DESTINATION=gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,atomgit.com
+CNB_COOL=cnb.cool
+
+DEFAULT_DESTINATION=${CNB_COOL},gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,atomgit.com
 
 if [ ! "$DESTINATION" ]; then
   DESTINATION=${DEFAULT_DESTINATION}
@@ -62,8 +64,9 @@ mirror(){
 
   REMOTE=$1
 
-  # if REMOTE not starts with git@
-  if test "${REMOTE}" = "${REMOTE#git@}"; then
+  if [ "${REMOTE}" = "${CNB_COOL}" ]; then
+   REMOTE="https://cnb:${CNB_SYNC}@$REMOTE/$GITHUB_ACTOR/$REPOSITORY"
+  elif [ "${REMOTE}" = "${REMOTE#git@}" ]; then
    REMOTE="git@$REMOTE:$GITHUB_ACTOR/$REPOSITORY.git"
   fi
 

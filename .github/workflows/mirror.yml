@@ -25,6 +25,7 @@ jobs:
       - name: mirror
         run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
         env:
+          CNB_SYNC: ${{ secrets.CNB_SYNC }}
           DESTINATION: ${{ inputs.destination }}
       - name: init-ssh-clean
         if: ${{ always() }}
