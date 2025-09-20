@@ -83,7 +83,7 @@ mirror(){
       echo
       echo "GET_RESULT: ${GET_RESULT}"
 
-      if [ -z "${GET_RESULT}" ]; then
+      if ! echo "${GET_RESULT}" | grep -q 'name'; then
           CREATE_RESULT=$(curl -sS -X 'POST' \
                         "https://api.cnb.cool/${OWNER}/-/repos" \
                         -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
