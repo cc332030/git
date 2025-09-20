@@ -75,16 +75,16 @@ mirror(){
       echo "check repository exists"
 
       # 仓库不存在时创建
-      GET_RESULT=$(curl -S -X 'GET' \
+      GET_RESULT=$(curl -sS -X 'GET' \
                 "https://api.cnb.cool/${GITHUB_REPOSITORY}" \
                 -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
-                -H 'accept: application/json')
+                -H 'accept: application/json' | grep 'web_url')
 
       echo
       echo "GET_RESULT: ${GET_RESULT}"
 
       if [ -z "${GET_RESULT}" ]; then
-          CREATE_RESULT=$(curl -S -X 'POST' \
+          CREATE_RESULT=$(curl -sS -X 'POST' \
                         "https://api.cnb.cool/${OWNER}/-/repos" \
                         -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
                         -H 'accept: application/json' \
