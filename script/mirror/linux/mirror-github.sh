@@ -53,6 +53,7 @@ echo ''
 echo "DESTINATION: ${DESTINATION}"
 
 write_hosts() {
+
   DOMAIN=$(echo "$1" |
            cut -d @ -f 2 |
            cut -d : -f 1)
@@ -60,7 +61,8 @@ write_hosts() {
                     grep "Address: " |
                     cut -d ' ' -f 2)
 
-  echo "$IP $DOMAIN" >> ~/.hosts
+  IP_DOMAIN="${IP} ${DOMAIN}"
+  echo "${IP_DOMAIN}" >> ~/.hosts
 
 }
 
