@@ -8,14 +8,17 @@
       image: alpine/git
     stages:
       - name: init-ssh-pre
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+        script: |
+          curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       - name: init-ssh
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        script: |
+          curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}
       - name: mirror
-        run: curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror.sh | sh
+        script: |
+          curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror.sh | sh
         env:
           SOURCE: ${CNB_REPO_URL_HTTPS}
           REMOTES: ${REMOTES}
