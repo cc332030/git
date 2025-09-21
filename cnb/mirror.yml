@@ -25,7 +25,7 @@
         script: |
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
 
-main:
+"(main|master)":
   pull_request:
     - <<: *mirror
   push:
