@@ -1,7 +1,7 @@
 
 .mirror: &mirror
   - env:
-      REMOTES: github.com
+      REPOS: github.com
     stages:
       - name: init-ssh-pre
         script: |
@@ -17,7 +17,7 @@
           curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror.sh | sh
         env:
           SOURCE: ${CNB_REPO_URL_HTTPS}
-          REMOTES: ${REMOTES}
+          REMOTES: ${REPOS}
 
     endStages:
       - name: init-ssh-clean
