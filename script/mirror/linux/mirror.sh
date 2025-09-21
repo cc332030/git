@@ -5,18 +5,25 @@ echo 'mirror'
 set -e
 
 SOURCE=$1
-DESTINATION=$2
+DESTINATIONS=$2
 
-echo "SOURCE=$SOURCE"
-echo "DESTINATION=$DESTINATION"
+echo "
+SOURCE=${SOURCE}
+DESTINATIONS=${DESTINATIONS}
+"
 
 git clone --mirror "$SOURCE" source && cd source || exit
-git remote set-url --push origin "$DESTINATION"
 
-git fetch -p origin
+for DESTINATION in $(echo "${DESTINATIONS}" | sed "s/,/\n/g"); do
 
-# Exclude refs created by GitHub for pull request.
-git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
-git push --mirror
+  echo "mirror to ${DESTINATION}"
+
+  git remote set-url --push origin "$DESTINATION"
+
+  # Exclude refs created by GitHub for pull request.
+  git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+  git push --mirror
+
+done
 
 echo 'mirror successfully'
