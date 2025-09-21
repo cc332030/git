@@ -1,5 +1,9 @@
-FROM alpine/git
+FROM debian
 
-RUN apk update && apk add --no-cache \
-  curl bind-tools \
-  && rm -rf /var/cache/apk/*
+RUN sudo apt update -y \
+  && sudo apt upgrade -y \
+  && sudo apt install -y \
+    git dnsutils \
+  && sudo apt clean \
+  && sudo apt autoremove -y --purge \
+  && sudo rm -rf /var/lib/apt/lists/*
