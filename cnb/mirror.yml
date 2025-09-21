@@ -2,14 +2,13 @@
 .mirror: &mirror
   - env:
       REPOS: github.com
+    services:
+      - docker
+    docker:
+      build: cnb/dockerfile
     stages:
-      - name: init
-        script: |
-          apt-get update -y && apt install -y \
-            dnsutils
       - name: test
         script: |
-          ping -c 4 github.com || true
           nslookup github.com || true
           nslookup @114.114.114.114 github.com || true
           nslookup @1.1.1.1 github.com || true
@@ -17,7 +16,6 @@
           dig @114.114.114.114 github.com || true
           dig @1.1.1.1 github.com || true
           telnet github.com 22 || true
-          curl -vL -o index.html https://github.com || true
       - name: init-ssh-pre
         script: |
           curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sh

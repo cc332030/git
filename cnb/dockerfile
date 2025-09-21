@@ -1,0 +1,6 @@
+FROM alpine:git
+
+RUN apk update && apk add --no-cache \
+  curl bind-tools \
+  && rm -rf /var/cache/apk/* \
+  && apk autoremove --purge
