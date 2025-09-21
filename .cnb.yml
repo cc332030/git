@@ -2,4 +2,4 @@
 jdk-version: 8
 
 include:
-  - ./cnb/mirror.yml
+  - cnb/mirror.yml
