@@ -36,14 +36,34 @@ REPOSITORY=${REPOSITORY}
 
 write_hosts() {
 
-  DOMAIN=$(echo "$1" |
-           cut -d @ -f 2 |
-           cut -d : -f 1)
-  IP=$(nslookup "${DOMAIN}" 8.8.8.8 |
-                    grep "Address: " |
-                    cut -d ' ' -f 2)
+  INPUT="$1"
+  DNS_SERVER=119.29.29.29
+  DOMAIN=""
+  IP=""
+
+  # 提取域名
+  # 处理HTTP/HTTPS格式
+  if expr "${INPUT}" : '^https\?://' >/dev/null; then
+      # 提取域名（如从https://cnb.cool/...中提取cnb.cool）
+      DOMAIN=$(expr "${INPUT}" : '^https\?://\([^/:]*\)')
+  # 处理SSH格式
+  elif expr "${INPUT}" : '^git@' >/dev/null; then
+      # 提取域名（如从git@cnb.cool:...中提取cnb.cool）
+      DOMAIN=$(expr "${INPUT}" : '^git@\([^/:]*\)')
+  # 处理纯域名格式
+  else
+      DOMAIN="${INPUT}"
+  fi
+
+  # 解析IP地址
+  IP=$(dig +short @"${DNS_SERVER}" "${DOMAIN}" | grep -v '^;' | head -n 1)
+  if [ -z "${IP}" ]; then
+      echo "无法解析域名IP: ${DOMAIN}"
+      exit 1
+  fi
 
   IP_DOMAIN="${IP} ${DOMAIN}"
+  echo "${IP_DOMAIN}"
   echo "${IP_DOMAIN}" >> ~/.hosts
 
 }
