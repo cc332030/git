@@ -1,7 +1,7 @@
 
 .mirror: &mirror
   - env:
-      REMOTES: github.com
+      REMOTES: "github.com"
     stages:
       - name: init-ssh-pre
         script: |
