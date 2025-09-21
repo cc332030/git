@@ -5,7 +5,7 @@
     services:
       - docker
     docker:
-      build: cnb/dockerfile
+      image: docker.cnb.cool/cc332030/linux
     stages:
       - name: init-ssh-pre
         script: |
