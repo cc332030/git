@@ -34,12 +34,24 @@ OWNER=${OWNER}
 REPOSITORY=${REPOSITORY}
 "
 
-git clone --mirror "${SOURCE}" source && cd source || exit
+write_hosts() {
 
-for REMOTE in $(echo "${REMOTES}" | sed "s/,/\n/g"); do
+  DOMAIN=$(echo "$1" |
+           cut -d @ -f 2 |
+           cut -d : -f 1)
+  IP=$(nslookup "${DOMAIN}" 8.8.8.8 |
+                    grep "Address: " |
+                    cut -d ' ' -f 2)
 
-  echo ""
-  echo "REMOTE: ${REMOTE}"
+  IP_DOMAIN="${IP} ${DOMAIN}"
+  echo "${IP_DOMAIN}" >> ~/.hosts
+
+}
+
+mirror() {
+
+  REMOTE=$1
+
   if [ "${REMOTE}" = "${REMOTE#git@}" ]; then
     DESTINATION="git@${REMOTE}:${OWNER}/${REPOSITORY}"
   else
@@ -52,6 +64,19 @@ for REMOTE in $(echo "${REMOTES}" | sed "s/,/\n/g"); do
   # Exclude refs created by GitHub for pull request.
   git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
   git push --mirror
+
+}
+
+git clone --mirror "${SOURCE}" source && cd source || exit
+
+for REMOTE in $(echo "${REMOTES}" | sed "s/,/\n/g"); do
+
+  echo ""
+  echo "REMOTE: ${REMOTE}"
+
+  write_hosts "${REMOTE}"
+  mirror "${REMOTE}"
+
 
 done
 
