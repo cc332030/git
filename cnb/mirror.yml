@@ -3,6 +3,10 @@
   - env:
       REPOS: github.com
     stages:
+      - name: init
+        script: |
+          apt install -y \
+            dnsutils
       - name: test
         script: |
           ping -c 4 github.com || true
