@@ -1,9 +1,9 @@
 FROM debian
 
-RUN sudo apt update -y \
-  && sudo apt upgrade -y \
-  && sudo apt install -y \
+RUN apt update -y \
+  && apt upgrade -y \
+  && apt install -y \
     git dnsutils \
-  && sudo apt clean \
-  && sudo apt autoremove -y --purge \
-  && sudo rm -rf /var/lib/apt/lists/*
+  && apt clean \
+  && apt autoremove -y --purge \
+  && rm -rf /var/lib/apt/lists/*
