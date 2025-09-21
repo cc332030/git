@@ -5,7 +5,7 @@
     stages:
       - name: init
         script: |
-          apt install -y \
+          apt-get update -y && apt install -y \
             dnsutils
       - name: test
         script: |
