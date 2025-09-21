@@ -2,10 +2,6 @@
 .mirror: &mirror
   - env:
       REMOTES: github.com
-    services:
-      - docker
-    docker:
-      image: alpine/git
     stages:
       - name: init-ssh-pre
         script: |
