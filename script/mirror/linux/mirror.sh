@@ -37,7 +37,7 @@ REPOSITORY=${REPOSITORY}
 write_hosts() {
 
   INPUT="$1"
-  DNS_SERVER=119.29.29.29
+  DNS_SERVER=1.1.1.1
   DOMAIN=""
   IP=""
 
@@ -63,7 +63,7 @@ write_hosts() {
   fi
 
   IP_DOMAIN="${IP} ${DOMAIN}"
-  echo "${IP_DOMAIN}"
+  echo "HOST：${IP_DOMAIN}"
   echo "${IP_DOMAIN}" >> ~/.hosts
 
 }
