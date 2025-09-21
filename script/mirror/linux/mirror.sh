@@ -38,6 +38,7 @@ git clone --mirror "${SOURCE}" source && cd source || exit
 
 for REMOTE in $(echo "${REMOTES}" | sed "s/,/\n/g"); do
 
+  echo ""
   echo "REMOTE: ${REMOTE}"
   if [ "${REMOTE}" = "${REMOTE#git@}" ]; then
     DESTINATION="git@${REMOTE}:${OWNER}/${REPOSITORY}"
