@@ -12,7 +12,8 @@
           dig github.com || true
           dig @114.114.114.114 github.com || true
           dig @1.1.1.1 github.com || true
-          curl -vL -O github.com || true
+          telnet github.com 22 || true
+          curl -vL -o index.html https://github.com || true
       - name: init-ssh-pre
         script: |
           curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sh
