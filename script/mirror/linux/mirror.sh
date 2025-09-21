@@ -40,7 +40,7 @@ for REMOTE in $(echo "${REMOTES}" | sed "s/,/\n/g"); do
 
   echo "REMOTE: ${REMOTE}"
   if [ "${REMOTE}" = "${REMOTE#git@}" ]; then
-    DESTINATION="git@${REMOTE}:${OWNER}/${REPOSITORY}.git"
+    DESTINATION="git@${REMOTE}:${OWNER}/${REPOSITORY}"
   else
     DESTINATION=${REMOTE}
   fi
