@@ -7,15 +7,6 @@
     docker:
       build: cnb/dockerfile
     stages:
-      - name: test
-        script: |
-          nslookup github.com || true
-          nslookup @114.114.114.114 github.com || true
-          nslookup @1.1.1.1 github.com || true
-          dig github.com || true
-          dig @114.114.114.114 github.com || true
-          dig @1.1.1.1 github.com || true
-          telnet github.com 22 || true
       - name: init-ssh-pre
         script: |
           curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sh
@@ -37,7 +28,8 @@
         script: |
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
 
-"(main|master)":
+#"(main|master)":
+"disable":
   pull_request:
     - <<: *mirror
   push:
