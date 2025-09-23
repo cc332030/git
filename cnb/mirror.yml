@@ -34,3 +34,6 @@
     - <<: *mirror
   push:
     - <<: *mirror
+#$:
+#  tag_push:
+#    - <<: *mirror
