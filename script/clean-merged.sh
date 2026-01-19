@@ -17,4 +17,5 @@ git branch -r --merged \
   | while read -r branch; do git push origin --delete "$branch"; done
 
 # 删除「远程已删、本地还残留」的追踪分支，不会删除任何本地实际分支，也不会修改远程仓库。
+git fetch -p
 git remote prune origin
