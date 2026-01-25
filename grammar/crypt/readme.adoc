@@ -1,0 +1,24 @@
+
+= git-crypt
+
+[source,shell]
+----
+git-crypt init
+
+# 清除Git缓存（让Git重新识别文件）
+git rm -r --cached .
+
+# 重新添加所有文件（此时文件会被加密）
+git add .
+
+git commit -m "Enable git-crypt encryption for entire project"
+
+git-crypt status
+
+# 解密/导入key
+git-crypt unlock d:/file/git-crypt-key
+
+# 导出
+git-crypt export-key d:/file/git-crypt-key
+
+----
