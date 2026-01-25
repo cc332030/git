@@ -9,7 +9,10 @@ git-crypt init
 git-crypt unlock d:/file/git-crypt-key
 
 # 清除Git缓存（让Git重新识别文件）
-git rm -r --cached .
+git rm -r --cached corp/ security/
+
+# 重新添加加密文件夹（此时文件会被加密）
+git add corp/ security/
 
 # 重新添加所有文件（此时文件会被加密）
 git add .
