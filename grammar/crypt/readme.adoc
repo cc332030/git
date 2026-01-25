@@ -3,6 +3,7 @@
 
 [source,shell]
 ----
+git init
 git-crypt init
 
 # 解密/导入key
