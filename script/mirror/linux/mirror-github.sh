@@ -88,9 +88,13 @@ mirror(){
       echo "check exists ${GITHUB_REPOSITORY}"
       # 仓库不存在时创建
       GET_RESULT=$(curl -sS -X 'GET' \
+                --max-time 3 \
                 "https://api.cnb.cool/${GITHUB_REPOSITORY}" \
                 -H "Authorization: Bearer ${CNB_SYNC_TOKEN}" \
-                -H 'accept: application/json')
+                -H 'accept: application/json') || {
+        echo "WARNING: curl timeout or error, skip ${GITHUB_REPOSITORY}"
+        return
+      }
 
       echo ''
       echo "GET_RESULT: ${GET_RESULT}"
