@@ -1,0 +1,8 @@
+
+= ssh只读
+
+[source,bash]
+----
+
+git config --global url."ssh://no-push.invalid/".pushInsteadOf gitlab-ci:
+----
