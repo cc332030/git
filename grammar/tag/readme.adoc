@@ -16,4 +16,7 @@ git tag --delete v0.1
 # delete origin tag
 git push --delete origin v0.1
 
+# 推送所有 tag 到 remote gitlab
+git push gitlab --tags
+
 ----
