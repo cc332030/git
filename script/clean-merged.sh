@@ -10,6 +10,7 @@ git fetch -p
 
 git branch -r --merged \
   | grep -v 'master' \
+  | grep -v 'main' \
   | grep -v 'release' \
   | grep -v 'ops' \
   | grep -v '^$' \
