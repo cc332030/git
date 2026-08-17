@@ -144,8 +144,7 @@ mirror(){
     git push \
       --progress \
       --porcelain  \
-      --mirror \
-      --force || true
+      --mirror || true
   fi
 
 }
