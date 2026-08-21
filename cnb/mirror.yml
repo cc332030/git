@@ -30,9 +30,9 @@
 
 #"(main|master)":
 "disable":
-  pull_request:
-    - <<: *mirror
   push:
+    - <<: *mirror
+  pull_request.merged:
     - <<: *mirror
 #$:
 #  tag_push:
