@@ -55,7 +55,9 @@ echo "DESTINATION: ${DESTINATION}"
 write_hosts() {
 
   DOMAIN=$(echo "$1" |
+           sed -E 's#^[a-zA-Z][a-zA-Z0-9+.-]*://##' |
            cut -d @ -f 2 |
+           cut -d / -f 1 |
            cut -d : -f 1)
   IP=$(nslookup "$DOMAIN" 8.8.8.8 |
                     grep "Address: " |
@@ -116,7 +118,14 @@ mirror(){
         echo "CREATE_RESULT: ${CREATE_RESULT}"
       fi
 
-      REMOTE="https://cnb:${CNB_SYNC_TOKEN}@${REMOTE}/${CNB_OWNER}/${REPOSITORY}"
+      # 注意：切勿把含凭据的完整 URL 打印到日志，否则会泄露 CNB_SYNC_TOKEN。
+      # 这里仅构造不含 token 的 URL，凭据通过 git credential store 注入。
+      REMOTE="https://${REMOTE}/${CNB_OWNER}/${REPOSITORY}"
+
+      CREDENTIAL_FILE="${HOME}/.git-credentials"
+      echo "https://cnb:${CNB_SYNC_TOKEN}@${REMOTE#https://}" >> "${CREDENTIAL_FILE}"
+      chmod 600 "${CREDENTIAL_FILE}"
+      git config --global credential.helper "store --file=${CREDENTIAL_FILE}"
 
     else
       echo ''
@@ -134,6 +143,7 @@ mirror(){
   fi
 
   echo ''
+  # 只打印不含 token 的远程地址（域名/仓库路径），避免泄露凭据
   echo "REMOTE: ${REMOTE}"
 
   if [ -n "${REMOTE}" ]; then
