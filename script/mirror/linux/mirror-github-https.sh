@@ -1,6 +1,5 @@
 #!/bin/sh
 
-echo ''
 echo 'mirror-github-https'
 
 set -e
@@ -11,27 +10,29 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   exit 1
 fi
 
-# 获取当前仓库的 origin 远程地址
-ORIGIN=$(git remote get-url origin)
-if [ -z "${ORIGIN}" ]; then
-  echo "ERROR: origin remote not found" >&2
-  exit 1
+# 默认取当前仓库的 origin 远程地址，也可通过 SOURCE 显式指定
+if [ -z "${SOURCE}" ]; then
+  SOURCE=$(git remote get-url origin)
+  if [ -z "${SOURCE}" ]; then
+    echo "ERROR: origin remote not found, please set SOURCE" >&2
+    exit 1
+  fi
 fi
-echo "ORIGIN: ${ORIGIN}"
+echo "SOURCE: ${SOURCE}"
 
 # 从远程地址解析归属用户（用户名）和仓库名
-if expr "${ORIGIN}" : '^https\?://' >/dev/null; then
+if expr "${SOURCE}" : '^https\?://' >/dev/null; then
   # https://cnb.cool/cc332030/git.git
-  path=$(expr "${ORIGIN}" : '^https\?://[^/]*//*\(.*\)')
+  path=$(expr "${SOURCE}" : '^https\?://[^/]*//*\(.*\)')
   OWNER=$(expr "${path}" : '^\([^/]*\)/')
   REPOSITORY=$(expr "${path}" : "^${OWNER}/\(.*\)" | sed 's/\.git$//')
-elif expr "${ORIGIN}" : '^git@' >/dev/null; then
+elif expr "${SOURCE}" : '^git@' >/dev/null; then
   # git@cnb.cool:cc332030/git.git
-  path=$(expr "${ORIGIN}" : '^git@[^:]*:\(.*\)')
+  path=$(expr "${SOURCE}" : '^git@[^:]*:\(.*\)')
   OWNER=$(expr "${path}" : '^\([^/]*\)/')
   REPOSITORY=$(expr "${path}" : "^${OWNER}/\(.*\)" | sed 's/\.git$//')
 else
-  echo "ERROR: unsupported origin format: ${ORIGIN}" >&2
+  echo "ERROR: unsupported SOURCE format: ${SOURCE}" >&2
   exit 1
 fi
 
@@ -44,6 +45,22 @@ GITHUB_OWNER=${OWNER}
 
 DESTINATION="https://${GITHUB_OWNER}:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${REPOSITORY}.git"
 echo "DESTINATION: ${DESTINATION}"
+
+write_hosts() {
+
+  DOMAIN=$(echo "$1" |
+           cut -d @ -f 2 |
+           cut -d : -f 1)
+  IP=$(nslookup "$DOMAIN" 8.8.8.8 |
+                    grep "Address: " |
+                    cut -d ' ' -f 2)
+
+  IP_DOMAIN="${IP} ${DOMAIN}"
+  echo "${IP_DOMAIN}" >> ~/.hosts
+
+}
+
+write_hosts "${DESTINATION}"
 
 git remote set-url --push origin "${DESTINATION}"
 
