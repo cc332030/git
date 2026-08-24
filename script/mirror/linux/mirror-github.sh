@@ -151,10 +151,10 @@ mirror(){
     write_hosts "${REMOTE}"
 
     git remote set-url --push origin "${REMOTE}"
-    git push \
-      --progress \
-      --porcelain  \
-      --all --tags || true
+    # 推送所有分支
+    git push --progress --porcelain --all || true
+    # 推送所有标签
+    git push --progress --porcelain --tags || true
   fi
 
 }
