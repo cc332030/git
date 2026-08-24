@@ -18,7 +18,14 @@
           echo "GITHUB_TOKEN is injected"
       - name: mirror
         script: |
-          curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github-https.sh | sh
+          # 兼容：优先使用本仓库脚本，不存在时再取远程
+          if [ -f "script/mirror/linux/mirror-github-https.sh" ]; then
+            echo "use local script: script/mirror/linux/mirror-github-https.sh"
+            sh script/mirror/linux/mirror-github-https.sh
+          else
+            echo "use remote script: mirror-github-https.sh"
+            curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github-https.sh | sh
+          fi
 
 "(main|master)":
 #"disable":
