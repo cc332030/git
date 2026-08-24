@@ -28,12 +28,12 @@
         script: |
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
 
-#"(main|master)":
-"disable":
+"(main|master)":
+#"disable":
   push:
     - <<: *mirror
   pull_request.merged:
     - <<: *mirror
-#$:
-#  tag_push:
-#    - <<: *mirror
+$:
+  tag_push:
+    - <<: *mirror
