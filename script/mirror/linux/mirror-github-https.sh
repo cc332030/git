@@ -51,7 +51,7 @@ write_hosts() {
   DOMAIN=$(echo "$1" |
            cut -d @ -f 2 |
            cut -d : -f 1)
-  IP=$(nslookup "$DOMAIN" 8.8.8.8 |
+  IP=$(nslookup "$DOMAIN" 1.1.1.1 |
                     grep "Address: " |
                     cut -d ' ' -f 2)
 
