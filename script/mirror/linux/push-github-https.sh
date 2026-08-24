@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo 'mirror-github-https'
+echo 'push-github-https'
 
 set -e
 
@@ -78,7 +78,16 @@ git remote set-url --push origin "${DESTINATION}"
 # Exclude refs created by GitHub for pull request.
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
-git push --mirror --progress
+# 只推送当前分支（HEAD），并同步其相关的所有引用（tags）。
+# 不再使用 --mirror：那会把所有分支/引用都推上去，属于全量镜像。
+BRANCH=$(git branch --show-current)
+if [ -z "${BRANCH}" ]; then
+  echo "ERROR: unable to determine current branch (detached HEAD?)" >&2
+  exit 1
+fi
+echo "BRANCH: ${BRANCH}"
+
+git push --progress --tags origin "HEAD:${BRANCH}"
 
 echo ''
-echo 'mirror-github-https successfully'
+echo 'push-github-https successfully'
