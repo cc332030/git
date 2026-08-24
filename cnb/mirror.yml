@@ -30,6 +30,5 @@
           fi
 
 "(main|master)":
-#"disable":
   push:
     - <<: *mirror
