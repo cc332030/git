@@ -43,13 +43,24 @@ echo "REPOSITORY: ${REPOSITORY}"
 # 两边用户名相同（人工保证），直接取当前归属用户
 GITHUB_OWNER=${OWNER}
 
-DESTINATION="https://${GITHUB_OWNER}:${GITHUB_TOKEN}@github.com/${GITHUB_OWNER}/${REPOSITORY}.git"
+# 注意：切勿把含凭据的完整 URL 打印到日志，否则会泄露 GITHUB_TOKEN。
+# 只打印不含 token 的域名/仓库信息。
+DESTINATION="https://github.com/${GITHUB_OWNER}/${REPOSITORY}.git"
 echo "DESTINATION: ${DESTINATION}"
+
+# 使用 git credential store 注入凭据，避免 URL 中携带 token 而泄露。
+# ~/.git-credentials 需设置为仅当前用户可读写。
+CREDENTIAL_FILE="${HOME}/.git-credentials"
+echo "https://${GITHUB_OWNER}:${GITHUB_TOKEN}@github.com" > "${CREDENTIAL_FILE}"
+chmod 600 "${CREDENTIAL_FILE}"
+git config --global credential.helper "store --file=${CREDENTIAL_FILE}"
 
 write_hosts() {
 
   DOMAIN=$(echo "$1" |
+           sed -E 's#^[a-zA-Z][a-zA-Z0-9+.-]*://##' |
            cut -d @ -f 2 |
+           cut -d / -f 1 |
            cut -d : -f 1)
   IP=$(nslookup "$DOMAIN" 1.1.1.1 |
                     grep "Address: " |
