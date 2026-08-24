@@ -2,7 +2,9 @@
 .mirror: &mirror
   - env:
       REPOS: github.com
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    imports:
+      # 从密钥仓库导入 GITHUB_TOKEN（Secret 仓库，仅流水线可访问）
+      - https://cnb.cool/cc332030/secrets/-/blob/main/secrets.yml
     services:
       - docker
     docker:
@@ -12,7 +14,7 @@
         script: |
           echo "check GITHUB_TOKEN"
           if [ -z "${GITHUB_TOKEN}" ]; then
-            echo "ERROR: GITHUB_TOKEN is not injected, please add it to project variables"
+            echo "ERROR: GITHUB_TOKEN is not injected, please check imports from cc332030/secrets"
             exit 1
           fi
           echo "GITHUB_TOKEN is injected"
