@@ -2,31 +2,23 @@
 .mirror: &mirror
   - env:
       REPOS: github.com
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
     services:
       - docker
     docker:
       image: docker.cnb.cool/cc332030/linux
     stages:
-      - name: init-ssh-pre
+      - name: check-env
         script: |
-          curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sh
-      - name: init-ssh
-        imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
-        script: |
-          curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
-        env:
-          SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}
+          echo "check GITHUB_TOKEN"
+          if [ -z "${GITHUB_TOKEN}" ]; then
+            echo "ERROR: GITHUB_TOKEN is not injected, please add it to project variables"
+            exit 1
+          fi
+          echo "GITHUB_TOKEN is injected"
       - name: mirror
         script: |
-          curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror.sh | sh
-        env:
-          SOURCE: ${CNB_REPO_URL_HTTPS}
-          REMOTES: ${REPOS}
-
-    endStages:
-      - name: init-ssh-clean
-        script: |
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
+          curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github-https.sh | sh
 
 "(main|master)":
 #"disable":

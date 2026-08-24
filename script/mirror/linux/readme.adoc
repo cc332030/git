@@ -1,19 +1,25 @@
-
 = MIRROR_GITHUB
+
+== mirror-github.sh
+
+基于 SSH 认证，从 GitHub 拉取镜像并分发到各目标平台（GitHub Actions 场景）。
 
 [source,shell script]
 ----
 curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github.sh | sh
-
 ----
 
-[source,yml]
-----
-jobs:
-  job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: mirror
-        run: ${{ secrets.MIRROR_GITHUB }}
+== mirror-github-https.sh
 
+基于 HTTPS + `GITHUB_TOKEN` 认证，将当前仓库镜像同步到 GitHub。
+无需配置 SSH key，从当前仓库的 origin（或 `SOURCE`）解析 owner/repo，通过 HTTPS push 到 GitHub 同名仓库。
+
+依赖环境变量：
+
+- `GITHUB_TOKEN`：GitHub 访问令牌（必填）
+- `SOURCE`：源仓库地址（可选，缺省时取当前仓库 `origin`）
+
+[source,shell script]
+----
+curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/mirror-github-https.sh | sh
 ----
