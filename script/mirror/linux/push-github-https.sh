@@ -78,16 +78,28 @@ git remote set-url --push origin "${DESTINATION}"
 # Exclude refs created by GitHub for pull request.
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
-# 只推送当前分支（HEAD），并同步其相关的所有引用（tags）。
+# 只同步「当前分支 + tags」。
 # 不再使用 --mirror：那会把所有分支/引用都推上去，属于全量镜像。
-BRANCH=$(git branch --show-current)
+# 分支来源优先级：外部注入的 BRANCH（流水线 CNB_BRANCH）> HEAD。
 if [ -z "${BRANCH}" ]; then
-  echo "ERROR: unable to determine current branch (detached HEAD?)" >&2
+  BRANCH=$(git branch --show-current)
+fi
+if [ -z "${BRANCH}" ]; then
+  echo "ERROR: unable to determine current branch (detached HEAD?), please set BRANCH or CNB_BRANCH" >&2
   exit 1
 fi
 echo "BRANCH: ${BRANCH}"
 
-git push --progress --tags origin "HEAD:${BRANCH}"
+# 显式构建 refspec：HEAD:refs/heads/<当前分支>
+# 使用 HEAD 而非分支名，避免 clone 后本地同名分支缺失导致的推送失败
+REFSPEC="HEAD:refs/heads/${BRANCH}"
+echo "REFSPEC: ${REFSPEC}"
+
+# 1. 只推送当前分支
+git push --progress --porcelain origin "${REFSPEC}"
+
+# 2. 单独同步所有 tags，不与 refspec 混用，避免 --tags 与 refspec 的语义冲突
+git push --progress --porcelain origin --tags
 
 echo ''
 echo 'push-github-https successfully'
