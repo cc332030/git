@@ -160,7 +160,7 @@ mirror(){
 
     git remote set-url --push origin "${REMOTE}"
     # 推送当前分支和所有标签
-    git push --progress --porcelain origin "HEAD:refs/heads/${BRANCH}" --tags || true
+    git push --progress --porcelain origin "refs/heads/${BRANCH}:refs/heads/${BRANCH}" --tags || true
   fi
 
 }
