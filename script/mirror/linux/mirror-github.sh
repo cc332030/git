@@ -37,6 +37,9 @@ echo "SOURCE: $SOURCE"
 rm -rf source
 
 git clone --mirror "$SOURCE" source && cd source || exit
+# 清除 clone --mirror 写入的 remote.origin.mirror 配置，
+# 否则后续 git push 会隐式启用 --mirror，与显式 refspec 冲突
+git config --unset remote.origin.mirror || true
 git fetch -p origin
 
 # Exclude refs created by GitHub for pull request.
