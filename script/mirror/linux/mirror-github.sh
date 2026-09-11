@@ -33,6 +33,9 @@ SOURCE="git@github.com:${GITHUB_REPOSITORY}.git"
 
 echo "SOURCE: $SOURCE"
 
+# 清理可能残留的同名目录，避免重复运行时 clone 冲突
+rm -rf source
+
 git clone --mirror "$SOURCE" source && cd source || exit
 git fetch -p origin
 
