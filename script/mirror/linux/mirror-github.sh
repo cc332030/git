@@ -39,6 +39,14 @@ git fetch -p origin
 # Exclude refs created by GitHub for pull request.
 git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
+# Determine the branch to push: current branch (from GITHUB_REF) or default branch (HEAD)
+if [ -n "${GITHUB_REF}" ] && [ "${GITHUB_REF#refs/heads/}" != "${GITHUB_REF}" ]; then
+  BRANCH="${GITHUB_REF#refs/heads/}"
+else
+  BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo master)
+fi
+echo "BRANCH: ${BRANCH}"
+
 DEFAULT_DESTINATION=${CNB_COOL},gitea.c332030.com,gitlab.com,gitee.com,gitcode.net,atomgit.com
 
 if [ ! "${DESTINATION}" ]; then
@@ -151,10 +159,8 @@ mirror(){
     write_hosts "${REMOTE}"
 
     git remote set-url --push origin "${REMOTE}"
-    # 推送所有分支
-    git push --progress --porcelain --all || true
-    # 推送所有标签
-    git push --progress --porcelain --tags || true
+    # 推送当前分支和所有标签
+    git push --progress --porcelain origin "HEAD:refs/heads/${BRANCH}" --tags || true
   fi
 
 }
