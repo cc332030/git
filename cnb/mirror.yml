@@ -20,6 +20,19 @@
           echo "GITHUB_TOKEN is injected"
       - name: mirror
         script: |
+          # 同步范围 = 当前分支 + tags，因此需要显式确定「当前分支」。
+          # 优先使用平台内置变量 CNB_BRANCH；缺失时回退到工作区的 HEAD。
+          BRANCH="${CNB_BRANCH}"
+          if [ -z "${BRANCH}" ]; then
+            BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || true)
+          fi
+          if [ -z "${BRANCH}" ]; then
+            echo "ERROR: unable to determine current branch, please set BRANCH" >&2
+            exit 1
+          fi
+          echo "BRANCH: ${BRANCH}"
+          export BRANCH
+
           # 兼容：优先使用本仓库脚本，不存在时再取远程
           if [ -f "script/mirror/linux/push-github-https.sh" ]; then
             echo "use local script: script/mirror/linux/push-github-https.sh"
