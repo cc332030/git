@@ -29,6 +29,6 @@
             curl -sL https://github.com/cc332030/git/raw/master/script/mirror/linux/push-github-https.sh | sh
           fi
 
-"(main|master)":
+"(main|master|dev)":
   push:
     - <<: *mirror
